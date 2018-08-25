@@ -1,0 +1,8 @@
+COLUMN TABLE "SoccerModeling.hdbMod.data::dims" 
+(
+   "ID" INTEGER, 
+   "TEAM" VARCHAR(50),
+   PRIMARY KEY ("ID")
+)
+
+

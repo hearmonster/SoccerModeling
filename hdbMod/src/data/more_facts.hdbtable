@@ -1,0 +1,7 @@
+COLUMN TABLE "SoccerModeling.hdbMod.data::more_facts" 
+(
+   "ID" INTEGER, 
+   "SEASON" VARCHAR(4),
+   "DECADE" VARCHAR(5),
+   PRIMARY KEY ("ID", "SEASON")
+)
