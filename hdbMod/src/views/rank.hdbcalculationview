@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="rank" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="rank"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="allFact">
+    <resourceUri>allFact</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="TEAM">
+        <descriptions defaultDescription="TEAM"/>
+      </viewAttribute>
+      <viewAttribute id="NUM_TROPHIES" aggregationType="sum">
+        <descriptions defaultDescription="NUM_TROPHIES"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="allFact">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEAM" source="TEAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NUM_TROPHIES" source="NUM_TROPHIES"/>
+    </input>
+    <windowFunction>
+      <order byViewAttributeName="NUM_TROPHIES" direction="DESC"/>
+      <rankThreshold>
+        <value>5</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank</rankViewAttributeName>
+    </windowFunction>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="TEAM" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEAM"/>
+      <keyMapping columnObjectName="Rank_1" columnName="TEAM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="NUM_TROPHIES" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NUM_TROPHIES"/>
+      <measureMapping columnObjectName="Rank_1" columnName="NUM_TROPHIES"/>
+    </measure>
+    <measure id="Rank" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Rank"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Rank"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="84" y="203"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

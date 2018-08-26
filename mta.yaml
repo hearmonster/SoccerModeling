@@ -1,5 +1,5 @@
 ID: SoccerModeling
-_schema-version: '3.1'
+_schema-version: '2.0'
 version: 0.0.1
 
 modules:
@@ -12,9 +12,8 @@ modules:
 resources:
  - name: hdi_db
    parameters:
-      config:
-         schema: SOCCER
-         database_id: 6a206158-f5ef-42f1-ab19-dba548592404
-   properties:
-      hdi-container-name: ${service-name}
+    config:
+        schema: SOCCER
+    properties:
+        hdi-container-name: ${service-name}
    type: com.sap.xs.hdi-container

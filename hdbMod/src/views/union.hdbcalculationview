@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="union" applyPrivilegeType="NONE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="union"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="SoccerModeling.hdbMod.data::facts">
+    <resourceUri>SoccerModeling.hdbMod.data::facts</resourceUri>
+  </DataSource>
+  <DataSource id="SoccerModeling.hdbMod.data::more_facts">
+    <resourceUri>SoccerModeling.hdbMod.data::more_facts</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Facts">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="SEASON">
+        <descriptions defaultDescription="SEASON"/>
+      </viewAttribute>
+      <viewAttribute id="DECADE">
+        <descriptions defaultDescription="DECADE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="SoccerModeling.hdbMod.data::facts">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DECADE" source="DECADE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MoreFacts">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="SEASON">
+        <descriptions defaultDescription="SEASON"/>
+      </viewAttribute>
+      <viewAttribute id="DECADE">
+        <descriptions defaultDescription="DECADE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="SoccerModeling.hdbMod.data::more_facts">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DECADE" source="DECADE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="UnionFacts">
+    <viewAttributes>
+      <viewAttribute keepFlag="true" id="ID" aggregationType="sum">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute keepFlag="true" id="SEASON">
+        <descriptions defaultDescription="SEASON"/>
+      </viewAttribute>
+      <viewAttribute keepFlag="true" id="DECADE">
+        <descriptions defaultDescription="DECADE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Facts">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DECADE" source="DECADE"/>
+    </input>
+    <input node="MoreFacts">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DECADE" source="DECADE"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="UnionFacts">
+  <attributes>
+    <attribute id="ID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ID"/>
+      <keyMapping columnObjectName="UnionFacts" columnName="ID"/>
+    </attribute>
+    <attribute id="SEASON" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SEASON"/>
+      <keyMapping columnObjectName="UnionFacts" columnName="SEASON"/>
+    </attribute>
+    <attribute id="DECADE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DECADE"/>
+      <keyMapping columnObjectName="UnionFacts" columnName="DECADE"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Facts" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-50" y="367"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="MoreFacts" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="170" y="350"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="UnionFacts" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="72" y="216"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

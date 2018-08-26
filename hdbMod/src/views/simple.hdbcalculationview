@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="simple" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="simple"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="dimension">
+    <resourceUri>dimension</resourceUri>
+  </DataSource>
+  <DataSource id="SoccerModeling.hdbMod.data::facts">
+    <resourceUri>SoccerModeling.hdbMod.data::facts</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="myDimension">
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="TEAM">
+        <descriptions defaultDescription="TEAM"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="dimension">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEAM" source="TEAM"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="myFact">
+    <descriptions>
+      <comment text="my comment"/>
+    </descriptions>
+    <viewAttributes>
+      <viewAttribute id="ID">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="SEASON">
+        <descriptions defaultDescription="SEASON"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="SoccerModeling.hdbMod.data::facts">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="TEAM">
+        <descriptions defaultDescription="TEAM"/>
+      </viewAttribute>
+      <viewAttribute id="ID" aggregationType="sum">
+        <descriptions defaultDescription="ID"/>
+      </viewAttribute>
+      <viewAttribute id="SEASON">
+        <descriptions defaultDescription="SEASON"/>
+      </viewAttribute>
+      <viewAttribute hidden="true" id="JOIN$ID$ID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="myDimension">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEAM" source="TEAM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <input node="myFact">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SEASON" source="SEASON"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ID$ID" source="ID"/>
+    </input>
+    <joinAttribute name="JOIN$ID$ID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="TEAM" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TEAM"/>
+      <keyMapping columnObjectName="Join_1" columnName="TEAM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="NUM_TROPHIES" order="2" aggregationType="count" measureType="simple">
+      <descriptions defaultDescription="NUM_TROPHIES"/>
+      <measureMapping columnObjectName="Join_1" columnName="ID"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="myDimension" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-17" y="338"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="myFact" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="195" y="342"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="90" y="196"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="myDimension" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="myFact" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
